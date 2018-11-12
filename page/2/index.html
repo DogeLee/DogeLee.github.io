@@ -66,6 +66,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-当你的女票叫你帮她整理一个表格" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/31/当你的女票叫你帮她整理一个表格/" class="article-date">
+  <time datetime="2018-05-31T13:27:54.000Z" itemprop="datePublished">2018-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/code/">code</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/31/当你的女票叫你帮她整理一个表格/">当你的女票叫你帮她整理一个表格</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>-“能不能帮我做一个EXCEL，两列，第一列是部门名称，第二列是微信号名称”</p>
+<p>哇 整理EXCEL<br>这么熟悉的需求吗<br>吃着烧烤我就开始写script</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//大概就是这样一个大概格式还算规范的文本，当然我省略了很多</span></span><br><span class="line"><span class="keyword">let</span> origin = <span class="string">` 中国人民武警部队上海市消防总队政治部  上海消防政工</span></span><br><span class="line"><span class="string">市经济和信息化委员会。 上海经信委</span></span><br><span class="line"><span class="string">市司法局   上海市司法局</span></span><br><span class="line"><span class="string">市人民政府办公厅。  上海发布</span></span><br><span class="line"><span class="string">市食品药品监督管理局 上海食药监`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对正则表达式不熟悉的我选择了拆分字符串，将文本里的词汇整理输出为一个数组</span></span><br><span class="line"><span class="keyword">let</span> arr = origin.split(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertToArr</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> str = <span class="string">''</span></span><br><span class="line">  <span class="keyword">let</span> wordArr = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">encodeURI</span>(item) === <span class="string">'%0A'</span> || <span class="built_in">encodeURI</span>(item) === <span class="string">'%20'</span> || <span class="built_in">encodeURI</span>(item) === <span class="string">'%E3%80%82'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (str !== <span class="string">''</span>) wordArr.push(str)</span><br><span class="line">      str = <span class="string">''</span></span><br><span class="line">      <span class="keyword">continue</span></span><br><span class="line">    &#125;</span><br><span class="line">    str += item</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> wordArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> wordArr = convertToArr(arr)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertToPrintStr</span>(<span class="params">wordArr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> str = <span class="string">`\ufeff部门名称,微信号名称\n`</span></span><br><span class="line">  wordArr.forEach(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index % <span class="number">2</span>) === <span class="number">0</span>) &#123;</span><br><span class="line">      str += (item + <span class="string">','</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      str += (item + <span class="string">'\n'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//再把数组转化成我需要输出的表格格式的字符串</span></span><br><span class="line"><span class="keyword">let</span> finalStr = convertToPrintStr(wordArr)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadFile</span> (<span class="params">name, contents, mimeType</span>) </span>&#123;</span><br><span class="line">  mimeType = mimeType || <span class="string">'text/plain'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> blob = <span class="keyword">new</span> <span class="built_in">window</span>.Blob([contents], &#123;</span><br><span class="line">    encoding: <span class="string">'UTF-8'</span>,</span><br><span class="line">    type: mimeType</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> dlink = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">  dlink.setAttribute(<span class="string">'type'</span>, <span class="string">'hidden'</span>)</span><br><span class="line">  dlink.download = name</span><br><span class="line">  dlink.href = <span class="built_in">window</span>.URL.createObjectURL(blob)</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(dlink)</span><br><span class="line">  dlink.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// revokeObjectURL needs a delay to work properly</span></span><br><span class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.URL.revokeObjectURL(that.href)</span><br><span class="line">    &#125;, <span class="number">1500</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  dlink.click()</span><br><span class="line">  dlink.remove()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最后输出文件，OK</span></span><br><span class="line">downloadFile(<span class="string">'file.csv'</span>, finalStr)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/05/31/当你的女票叫你帮她整理一个表格/" data-id="cjoe0eqs4000ln8v3bvpsu9e5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-哲学三信" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/19/哲学三信/" class="article-date">
@@ -105,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/05/19/哲学三信/" data-id="cjodtdu6800087kv3wbzj4w2e" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/05/19/哲学三信/" data-id="cjoe0eqru000dn8v310ropxbm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -146,7 +189,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/05/18/hotDays/" data-id="cjodtdu5e00037kv3a5w10g38" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/05/18/hotDays/" data-id="cjoe0eqrn0007n8v3a45pj1p1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -192,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/05/18/hello-world/" data-id="cjodtdu6c000a7kv36mgljfkd" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/05/18/hello-world/" data-id="cjoe0eqrc0001n8v3ksohcnzn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -245,6 +288,10 @@
       <ul>
         
           <li>
+            <a href="/2018/11/12/atodo-rebuild-1/">atodo-rebuild-1</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
           </li>
         
@@ -258,10 +305,6 @@
         
           <li>
             <a href="/2018/09/06/summerTail/">Summer&#39;s gone</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/05/vue的一点原理/">vue的一点原理</a>
           </li>
         
       </ul>

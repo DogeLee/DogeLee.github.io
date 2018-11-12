@@ -66,6 +66,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-atodo-rebuild-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/12/atodo-rebuild-1/" class="article-date">
+  <time datetime="2018-11-12T07:51:13.000Z" itemprop="datePublished">2018-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/code/">code</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/atodo-rebuild-1/">atodo-rebuild-1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。</p>
+<p>目前项目目录是这样的：<br><img src="https://upload-images.jianshu.io/upload_images/6273583-0d46d6734cebfb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目目录"></p>
+<p>目录中的某些文件等下会提到。</p>
+<p>然后以下是今天工作的要点：</p>
+<ol>
+<li>安装less模块与webpack的配置；</li>
+<li>路由的制定。</li>
+</ol>
+<h3 id="安装less模块与webpack的配置"><a href="#安装less模块与webpack的配置" class="headerlink" title="安装less模块与webpack的配置"></a>安装less模块与webpack的配置</h3><p>要在项目中使用less模块，需要安装less和less-loader：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install less --save-dev</span><br><span class="line">npm install less-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p>安装结束后，需要在module中配置：<br>(用vue-cli创建的项目在<code>build/webpack.base.conf.js</code>中配置)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.less$/,</span><br><span class="line">    use: [&#123;</span><br><span class="line">       loader: "style-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "css-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "less-loader"</span><br><span class="line">    &#125;]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用less文件时，当一个less文件a需要依赖less文件b时，我是在文件a中：<br>(我也是这样引入font-awesome的)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import url(&apos;./b.less&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>vue文件需要使用样式时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;../styles/a.less&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="路由的制定"><a href="#路由的制定" class="headerlink" title="路由的制定"></a>路由的制定</h3><p>直接上路由配置文件代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'@/pages/Login'</span></span><br><span class="line"><span class="keyword">import</span> Main <span class="keyword">from</span> <span class="string">'@/pages/Main'</span></span><br><span class="line"><span class="keyword">import</span> Todo <span class="keyword">from</span> <span class="string">'@/pages/Todo'</span></span><br><span class="line"><span class="keyword">import</span> Plan <span class="keyword">from</span> <span class="string">'@/pages/Plan'</span></span><br><span class="line"><span class="keyword">import</span> Profile <span class="keyword">from</span> <span class="string">'@/pages/Profile'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/'</span>,</span><br><span class="line">      redirect: <span class="string">'login'</span>,</span><br><span class="line">      component: App,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'login'</span>,</span><br><span class="line">          component: Login</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'main'</span>,</span><br><span class="line">          redirect: <span class="string">'/main/todo'</span>,</span><br><span class="line">          component: Main,</span><br><span class="line">          children: [</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'todo'</span>,</span><br><span class="line">              component: Todo</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'plan'</span>,</span><br><span class="line">              component: Plan</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'profile'</span>,</span><br><span class="line">              component: Profile</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>下面放一个界面截图：<br><img src="https://upload-images.jianshu.io/upload_images/6273583-46e9589e7dd84002.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="界面截图"></p>
+<p>main页面包含三个子页面，当需要跳转时，点击页面底部的三个按钮，控制跳转的代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">checkout: <span class="function"><span class="keyword">function</span> (<span class="params">index</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (index !== <span class="keyword">this</span>.status) &#123;</span><br><span class="line">    <span class="keyword">const</span> pageArr = [<span class="string">'todo'</span>, <span class="string">'plan'</span>, <span class="string">'profile'</span>]</span><br><span class="line">    <span class="keyword">this</span>.$router.push(pageArr[index])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>路由和页面跳转就做好了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjoe0eqri0003n8v3t9sr2bj2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-atodo-rebuild-0" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/12/atodo-rebuild-0/" class="article-date">
@@ -113,11 +169,12 @@
 <li>完善一些细节。</li>
 </ul>
 <p>最近状态不好，慢慢做吧，慢慢找状态。</p>
+<p>项目地址：<a href="https://github.com/DogeLee/atodo" target="_blank" rel="noopener">https://github.com/DogeLee/atodo</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjodtdu5200017kv32qktdh2b" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjoe0eqrl0005n8v3m6v51q4k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjodtdu6600077kv3h6n4ua89" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjoe0eqro0008n8v3bk9018r0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -234,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjodtdu7d000r7kv3hvh1gj0c" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjoe0eqr80000n8v3yvchxkpd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -278,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjodtdu73000p7kv3apoq9arn" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjoe0eqrz000gn8v3sb2moeag" class="article-share-link">Share</a>
       
       
     </footer>
@@ -375,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjodtdu6l000g7kv31kqtf1nz" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjoe0eqrt000cn8v31x2b9rzo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -416,7 +473,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjodtdu6h000c7kv31qlao8ea" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjoe0eqs1000in8v3e80pfjq5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -484,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/02/reg-exp/" data-id="cjodtdu6f000b7kv3acx6xa7a" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/02/reg-exp/" data-id="cjoe0eqrq000an8v3h894wjcm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -526,7 +583,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/06/11/洋鸟消夏录/" data-id="cjodtdu6j000f7kv30258sdhv" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/06/11/洋鸟消夏录/" data-id="cjoe0eqs6000nn8v3yorde0ih" class="article-share-link">Share</a>
       
       
     </footer>
@@ -567,50 +624,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/06/02/dream/" data-id="cjodtdu4o00007kv3jbrqb6hf" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-当你的女票叫你帮她整理一个表格" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/31/当你的女票叫你帮她整理一个表格/" class="article-date">
-  <time datetime="2018-05-31T13:27:54.000Z" itemprop="datePublished">2018-05-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/code/">code</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/31/当你的女票叫你帮她整理一个表格/">当你的女票叫你帮她整理一个表格</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>-“能不能帮我做一个EXCEL，两列，第一列是部门名称，第二列是微信号名称”</p>
-<p>哇 整理EXCEL<br>这么熟悉的需求吗<br>吃着烧烤我就开始写script</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//大概就是这样一个大概格式还算规范的文本，当然我省略了很多</span></span><br><span class="line"><span class="keyword">let</span> origin = <span class="string">` 中国人民武警部队上海市消防总队政治部  上海消防政工</span></span><br><span class="line"><span class="string">市经济和信息化委员会。 上海经信委</span></span><br><span class="line"><span class="string">市司法局   上海市司法局</span></span><br><span class="line"><span class="string">市人民政府办公厅。  上海发布</span></span><br><span class="line"><span class="string">市食品药品监督管理局 上海食药监`</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对正则表达式不熟悉的我选择了拆分字符串，将文本里的词汇整理输出为一个数组</span></span><br><span class="line"><span class="keyword">let</span> arr = origin.split(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertToArr</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> str = <span class="string">''</span></span><br><span class="line">  <span class="keyword">let</span> wordArr = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">encodeURI</span>(item) === <span class="string">'%0A'</span> || <span class="built_in">encodeURI</span>(item) === <span class="string">'%20'</span> || <span class="built_in">encodeURI</span>(item) === <span class="string">'%E3%80%82'</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (str !== <span class="string">''</span>) wordArr.push(str)</span><br><span class="line">      str = <span class="string">''</span></span><br><span class="line">      <span class="keyword">continue</span></span><br><span class="line">    &#125;</span><br><span class="line">    str += item</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> wordArr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> wordArr = convertToArr(arr)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertToPrintStr</span>(<span class="params">wordArr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> str = <span class="string">`\ufeff部门名称,微信号名称\n`</span></span><br><span class="line">  wordArr.forEach(<span class="function">(<span class="params">item, index</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> ((index % <span class="number">2</span>) === <span class="number">0</span>) &#123;</span><br><span class="line">      str += (item + <span class="string">','</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      str += (item + <span class="string">'\n'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//再把数组转化成我需要输出的表格格式的字符串</span></span><br><span class="line"><span class="keyword">let</span> finalStr = convertToPrintStr(wordArr)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">downloadFile</span> (<span class="params">name, contents, mimeType</span>) </span>&#123;</span><br><span class="line">  mimeType = mimeType || <span class="string">'text/plain'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> blob = <span class="keyword">new</span> <span class="built_in">window</span>.Blob([contents], &#123;</span><br><span class="line">    encoding: <span class="string">'UTF-8'</span>,</span><br><span class="line">    type: mimeType</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> dlink = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>)</span><br><span class="line">  dlink.setAttribute(<span class="string">'type'</span>, <span class="string">'hidden'</span>)</span><br><span class="line">  dlink.download = name</span><br><span class="line">  dlink.href = <span class="built_in">window</span>.URL.createObjectURL(blob)</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(dlink)</span><br><span class="line">  dlink.onclick = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// revokeObjectURL needs a delay to work properly</span></span><br><span class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.URL.revokeObjectURL(that.href)</span><br><span class="line">    &#125;, <span class="number">1500</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  dlink.click()</span><br><span class="line">  dlink.remove()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最后输出文件，OK</span></span><br><span class="line">downloadFile(<span class="string">'file.csv'</span>, finalStr)</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/05/31/当你的女票叫你帮她整理一个表格/" data-id="cjodtdu6p000i7kv3ht6bhjox" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/06/02/dream/" data-id="cjoe0eqrk0004n8v3cgt5t0x2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -663,6 +677,10 @@
       <ul>
         
           <li>
+            <a href="/2018/11/12/atodo-rebuild-1/">atodo-rebuild-1</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
           </li>
         
@@ -676,10 +694,6 @@
         
           <li>
             <a href="/2018/09/06/summerTail/">Summer&#39;s gone</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/05/vue的一点原理/">vue的一点原理</a>
           </li>
         
       </ul>
