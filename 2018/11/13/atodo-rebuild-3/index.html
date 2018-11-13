@@ -16,7 +16,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-b5242c99574091b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-a4e1f48c84ccd2b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-11-13T08:16:00.693Z">
+<meta property="og:updated_time" content="2018-11-13T08:25:04.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="atodo-rebuild-3">
 <meta name="twitter:description" content="现在我要使用express（node的框架）新建一个后端的项目，然后完成一些基本的配置。 新建项目首先全局安装express，然后使用下面的命令新建项目：1express &amp;lt;项目名&amp;gt; express的项目是秒建的，然后需要手动下载依赖，使用npm install。 下载需要的中间件express自带一些请求体、cookie、session处理的中间件，我还要根据自己的需求下载一下：">
@@ -112,7 +112,7 @@
 <p>UserSQL.js用来声明数据库操作的语句：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UserSQL = &#123;</span><br><span class="line">  <span class="comment">//example</span></span><br><span class="line">  selectTodo:<span class="string">'SELECT * FROM todo WHERE date = ?'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserSQL</span><br></pre></td></tr></table></figure></p>
 <p><strong>如何连接并使用数据库呢？</strong></p>
 <p>在routes中如下使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pool = <span class="built_in">require</span>(<span class="string">'../db/sqlpool'</span>);</span><br><span class="line"><span class="keyword">var</span> userSQL = <span class="built_in">require</span>(<span class="string">'../db/usersql'</span>);</span><br><span class="line">pool.getConnection()</span><br><span class="line">.then(<span class="function"><span class="params">connection</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> connection.query(selectTodo,[params])</span><br><span class="line">  .then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">    resultHandler(result)</span><br><span class="line">    connection.release()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>其他暂时应该没什么需要配置的了，开开心心写接口就OK。</p>
+<p>其他暂时应该没什么需要配置的了，开开心心写接口就OK。<br>后端仓库链接：<a href="https://github.com/DogeLee/atodo-backend" target="_blank" rel="noopener">https://github.com/DogeLee/atodo-backend</a></p>
 
       
     </div>
