@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>atodo-rebuild-2 | World of Wonder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="昨天完成了前端的基本架构，下一步就是业务逻辑方面的步骤了。 接下来理一下开发流程：  确定数据结构与完成数据库建模； 确定前后端交互接口； （完成后端架构）开发后端逻辑代码，实现业务接口； 开发前端逻辑代码，完成联调； 测试与完善细节。  数据库建模数据库建模当然是要第一时间做的，下图是以前版本的mock数据： 以前的todo数据没有id，没有办法支持未完成的plan功能，现在要加入id，也要将t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="atodo-rebuild-2">
+<meta property="og:url" content="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/index.html">
+<meta property="og:site_name" content="World of Wonder">
+<meta property="og:description" content="昨天完成了前端的基本架构，下一步就是业务逻辑方面的步骤了。 接下来理一下开发流程：  确定数据结构与完成数据库建模； 确定前后端交互接口； （完成后端架构）开发后端逻辑代码，实现业务接口； 开发前端逻辑代码，完成联调； 测试与完善细节。  数据库建模数据库建模当然是要第一时间做的，下图是以前版本的mock数据： 以前的todo数据没有id，没有办法支持未完成的plan功能，现在要加入id，也要将t">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-411dd04c49d7a1ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-80cf800f69d75a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-7e2981a34b02c7b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-3fea80778b7e5f3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-0edb91d83aafa231.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-11-13T06:38:36.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="atodo-rebuild-2">
+<meta name="twitter:description" content="昨天完成了前端的基本架构，下一步就是业务逻辑方面的步骤了。 接下来理一下开发流程：  确定数据结构与完成数据库建模； 确定前后端交互接口； （完成后端架构）开发后端逻辑代码，实现业务接口； 开发前端逻辑代码，完成联调； 测试与完善细节。  数据库建模数据库建模当然是要第一时间做的，下图是以前版本的mock数据： 以前的todo数据没有id，没有办法支持未完成的plan功能，现在要加入id，也要将t">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6273583-411dd04c49d7a1ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="World of Wonder" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css"> -->
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">World of Wonder</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Doge Lee&#39;s Blog</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <!-- <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav> -->
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://dogelee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-atodo-rebuild-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/13/atodo-rebuild-2/" class="article-date">
+  <time datetime="2018-11-13T06:38:10.000Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/code/">code</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      atodo-rebuild-2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天完成了前端的基本架构，下一步就是业务逻辑方面的步骤了。</p>
+<p>接下来理一下开发流程：</p>
+<ol>
+<li>确定数据结构与完成数据库建模；</li>
+<li>确定前后端交互接口；</li>
+<li>（完成后端架构）开发后端逻辑代码，实现业务接口；</li>
+<li>开发前端逻辑代码，完成联调；</li>
+<li>测试与完善细节。</li>
+</ol>
+<h3 id="数据库建模"><a href="#数据库建模" class="headerlink" title="数据库建模"></a>数据库建模</h3><p>数据库建模当然是要第一时间做的，下图是以前版本的mock数据：<br><img src="https://upload-images.jianshu.io/upload_images/6273583-411dd04c49d7a1ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="todolist获取的数据"><br><img src="https://upload-images.jianshu.io/upload_images/6273583-80cf800f69d75a95.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="完成度日历获取的数据"></p>
+<p>以前的todo数据没有id，没有办法支持未完成的plan功能，现在要加入id，也要将todo和plan联系起来，这就是我抛弃mongodb改用mysql的原因，我觉得在这种场景下，关系型数据库会更好。</p>
+<p>下面是详细的数据库建模：</p>
+<p><strong>todo表</strong>：存储todolist的item信息，包括它们的id、内容、状态以及相关联的plan（可以没有）、时间（精确到秒，用于排序）、日期（8位数字，用于展示和统计）。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-7e2981a34b02c7b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="todo表"></p>
+<p><strong>date表</strong>：记录每一天的完成率。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-3fea80778b7e5f3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="date表"></p>
+<p><strong>plan表</strong>：存储plan的信息，setting是plan的设置，具体我还没想太清楚。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-0edb91d83aafa231.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plan表"></p>
+<p>基本上就是这三张表了。</p>
+<h3 id="前后端交互接口制定"><a href="#前后端交互接口制定" class="headerlink" title="前后端交互接口制定"></a>前后端交互接口制定</h3><p>交互接口制定之前，首先要想清楚，主要逻辑放在前端还是后端：</p>
+<ul>
+<li>放在前端就用restful接口，但是因为应用中还有许多需要统计的地方，把数据全拉到前端加工再返回，会增加很多没有必要的网络负担；</li>
+<li>放在后端的话，前端就只是向后端说一句，我要做啥啥啥，这样一来后端的负担会变大，另一方面功能的扩展也会变得不方便。</li>
+</ul>
+<p>但是从目前看来，我现在做的这个应用功能简单，用户少，用后一种模式的话用户体验会更好，所以就暂时先选择后一种做法了。</p>
+<p>具体的接口文档我将在完成后端架构后在确定并撰写。（一方面是今天写累了懒，另一方面是完成后端架构后更加容易确定有些功能如何实现）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/" data-id="cjofd8nbc0003k0v3rbc29gar" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/12/atodo-rebuild-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">atodo-rebuild-1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/music/">music</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/11/13/atodo-rebuild-2/">atodo-rebuild-2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/12/atodo-rebuild-1/">atodo-rebuild-1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/07/star-collector-1/">star-collector-1 开始</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/07/JS中this关键字/">JS中this关键字</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Doge Lee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+<script src="http://apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+  if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='/js/jquery-2.0.3.min.js' type='text/javascript'%3E%3C/script%3E"));
+  }
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
