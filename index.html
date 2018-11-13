@@ -66,6 +66,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-atodo-rebuild-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/13/atodo-rebuild-3/" class="article-date">
+  <time datetime="2018-11-13T08:15:31.000Z" itemprop="datePublished">2018-11-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/code/">code</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/13/atodo-rebuild-3/">atodo-rebuild-3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现在我要使用express（node的框架）新建一个后端的项目，然后完成一些基本的配置。</p>
+<h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><p>首先全局安装express，然后使用下面的命令新建项目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">express &lt;项目名&gt;</span><br></pre></td></tr></table></figure></p>
+<p>express的项目是秒建的，然后需要手动下载依赖，使用<code>npm install</code>。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-b5242c99574091b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建好的项目目录"></p>
+<h3 id="下载需要的中间件"><a href="#下载需要的中间件" class="headerlink" title="下载需要的中间件"></a>下载需要的中间件</h3><p>express自带一些请求体、cookie、session处理的中间件，我还要根据自己的需求下载一下：</p>
+<ul>
+<li><strong>helmet</strong>：这是最基础的加强网站安全的中间件；</li>
+<li><strong>mysql</strong>：使用mysql中间件连接数据库。</li>
+</ul>
+<p>使用<code>npm install &lt;中间件名&gt; --save</code>即可下载依赖，加密型的中间件放到后面再说吧，先不考虑这些细节。</p>
+<p>如何使用：<br>比如helmet，在app.js中如下使用即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var helmet = require(&apos;helmet&apos;);</span><br><span class="line">app.use(helmet());</span><br></pre></td></tr></table></figure></p>
+<h3 id="数据库方面的配置"><a href="#数据库方面的配置" class="headerlink" title="数据库方面的配置"></a>数据库方面的配置</h3><p>首先创建db文件夹，创建DBConfig、SQLPool、UserSQL文件。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-a4e1f48c84ccd2b7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>DBConfig.js文件配置数据库连接信息：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	mysql:&#123;</span><br><span class="line">		host:<span class="string">'127.0.0.1'</span>,</span><br><span class="line">		user:<span class="string">'root'</span>,</span><br><span class="line">		password:<span class="string">'password'</span>,</span><br><span class="line">		database:<span class="string">'atodo'</span>,</span><br><span class="line">		port:<span class="number">3306</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>SQLPool.js文件创建一个连接池实例并且export出来：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>)</span><br><span class="line"><span class="keyword">var</span> dbConfig = <span class="built_in">require</span>(<span class="string">'./DBConfig'</span>)</span><br><span class="line"><span class="comment">// 使用DBConfig.js的配置信息创建一个MySQL连接池</span></span><br><span class="line"><span class="keyword">var</span> pool = mysql.createPool( dbConfig.mysql )</span><br><span class="line"><span class="built_in">module</span>.exports = pool</span><br></pre></td></tr></table></figure></p>
+<p>UserSQL.js用来声明数据库操作的语句：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> UserSQL = &#123;</span><br><span class="line">  <span class="comment">//example</span></span><br><span class="line">  selectTodo:<span class="string">'SELECT * FROM todo WHERE date = ?'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserSQL</span><br></pre></td></tr></table></figure></p>
+<p><strong>如何连接并使用数据库呢？</strong></p>
+<p>在routes中如下使用：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pool = <span class="built_in">require</span>(<span class="string">'../db/sqlpool'</span>);</span><br><span class="line"><span class="keyword">var</span> userSQL = <span class="built_in">require</span>(<span class="string">'../db/usersql'</span>);</span><br><span class="line">pool.getConnection()</span><br><span class="line">.then(<span class="function"><span class="params">connection</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> connection.query(selectTodo,[params])</span><br><span class="line">  .then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">    resultHandler(result)</span><br><span class="line">    connection.release()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>其他暂时应该没什么需要配置的了，开开心心写接口就OK。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-3/" data-id="cjofgpvhx00011sv3tzcdp941" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-atodo-rebuild-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/13/atodo-rebuild-2/" class="article-date">
@@ -119,7 +175,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/" data-id="cjofd8nbc0003k0v3rbc29gar" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/" data-id="cjofgpvfy00001sv35vx060i3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjofd8nbf0004k0v3552skh34" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjofgpvik000b1sv3szvu5lx6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,7 +293,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjofd8n920000k0v3plvzt5u1" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjofgpvig00081sv36igl6wzr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjofd8nbu000ck0v3axqwyey4" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjofgpvin000c1sv3ym41ncjb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -354,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjofd8nc2000fk0v37jah4n5j" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjofgpvie00071sv36zmmot3g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -398,7 +454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjofd8ndm000xk0v3z431nkdx" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjofgpvkl000z1sv3xe0gfm3r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -495,7 +551,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjofd8nd6000vk0v3tvbe7eja" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjofgpvk9000w1sv3vnh5h3uw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -536,7 +592,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjofd8ncg000ik0v35lf55lx1" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjofgpvjl000h1sv3d7sdp4ac" class="article-share-link">Share</a>
       
       
     </footer>
@@ -604,49 +660,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/02/reg-exp/" data-id="cjofd8nbs000bk0v30lqhq3gm" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-洋鸟消夏录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/06/11/洋鸟消夏录/" class="article-date">
-  <time datetime="2018-06-11T14:42:39.000Z" itemprop="datePublished">2018-06-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/music/">music</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/11/洋鸟消夏录/">洋鸟消夏录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=386832&auto=0&height=66"></iframe><br>最近很喜欢听的歌 很有一种苦夏的感觉</p>
-<p>一开始以为拿过来还需要自己写一点代码<br>结果没时间就拖了很久<br>结果网易云生成一个外链播放器就好啦<br>很方便 以后可以在这里放自己喜欢的歌啦</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/06/11/洋鸟消夏录/" data-id="cjofd8ncj000kk0v3ddmkhz0a" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/02/reg-exp/" data-id="cjofgpvjp000k1sv3ysb188i9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -699,6 +713,10 @@
       <ul>
         
           <li>
+            <a href="/2018/11/13/atodo-rebuild-3/">atodo-rebuild-3</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/13/atodo-rebuild-2/">atodo-rebuild-2</a>
           </li>
         
@@ -712,10 +730,6 @@
         
           <li>
             <a href="/2018/09/07/star-collector-1/">star-collector-1 开始</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/07/JS中this关键字/">JS中this关键字</a>
           </li>
         
       </ul>
