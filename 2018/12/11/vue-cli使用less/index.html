@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>vue-cli使用less | World of Wonder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天算是踩了个坑吧… 我想要在我用vue-cli创建的项目中使用less，于是乎想到要在webpack中进行配置，根据我搜集到的信息，我应该作出如下类似的配置（有的教程则配置得更加高级和复杂一点）： 但是在我npm run dev的时候，编译却失败了，出现了一些报错，类似于：123456789101112131415error  in ./src/styles/special/index.less">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli使用less">
+<meta property="og:url" content="https://dogelee.github.io/2018/12/11/vue-cli使用less/index.html">
+<meta property="og:site_name" content="World of Wonder">
+<meta property="og:description" content="今天算是踩了个坑吧… 我想要在我用vue-cli创建的项目中使用less，于是乎想到要在webpack中进行配置，根据我搜集到的信息，我应该作出如下类似的配置（有的教程则配置得更加高级和复杂一点）： 但是在我npm run dev的时候，编译却失败了，出现了一些报错，类似于：123456789101112131415error  in ./src/styles/special/index.less">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-4109e7fa3e2a2664.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-11T07:52:45.719Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-cli使用less">
+<meta name="twitter:description" content="今天算是踩了个坑吧… 我想要在我用vue-cli创建的项目中使用less，于是乎想到要在webpack中进行配置，根据我搜集到的信息，我应该作出如下类似的配置（有的教程则配置得更加高级和复杂一点）： 但是在我npm run dev的时候，编译却失败了，出现了一些报错，类似于：123456789101112131415error  in ./src/styles/special/index.less">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6273583-4109e7fa3e2a2664.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="World of Wonder" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css"> -->
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">World of Wonder</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Doge Lee&#39;s Blog</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <!-- <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav> -->
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://dogelee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vue-cli使用less" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/11/vue-cli使用less/" class="article-date">
+  <time datetime="2018-12-11T07:30:28.000Z" itemprop="datePublished">2018-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/study/">study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      vue-cli使用less
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天算是踩了个坑吧…</p>
+<p>我想要在我用vue-cli创建的项目中使用less，于是乎想到要在webpack中进行配置，根据我搜集到的信息，我应该作出如下类似的配置（有的教程则配置得更加高级和复杂一点）：<br><img src="https://upload-images.jianshu.io/upload_images/6273583-4109e7fa3e2a2664.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>但是在我npm run dev的时候，编译却失败了，出现了一些报错，类似于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">error  in ./src/styles/special/index.less</span><br><span class="line"></span><br><span class="line">Module build failed:</span><br><span class="line"></span><br><span class="line">// load the styles</span><br><span class="line">var content = require(&quot;!!../../../node_modules/css-loader/index.js??ref--9-1!../../../node_modules/postcss-loader/lib/index.js??ref--9-2!../../../node_modules/less-loader/dist/cjs.js??ref--9-3!./index.less&quot;);</span><br><span class="line">          ^</span><br><span class="line">Unrecognised input</span><br><span class="line">      in C:\Users\xx\Desktop\atodo\src\styles\special\index.less (line 4, column 12)</span><br><span class="line"></span><br><span class="line"> @ ./src/styles/special/index.less 2:14-343 21:1-42:3 22:19-348</span><br><span class="line"> @ ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&amp;index=0!./src/pages/Main.vue @ ./src/pages/Main.vue</span><br><span class="line"> @ ./src/router/index.js</span><br><span class="line"> @ ./src/main.js</span><br><span class="line"> @ multi (webpack)-dev-server/client?http://localhost:8080 webpack/hot/dev-server ./src/main.js</span><br></pre></td></tr></table></figure></p>
+<p>我怀疑问题出在webpack配置上，于是搜索我的问题，最后发现其实：</p>
+<p><strong>不用配置…</strong></p>
+<p>对，就是不用配置，准确说是<strong>使用vue-cli创建并且选择使用webpack的项目使用less不需要再对webpack进行配置</strong>。</p>
+<p>在<code>/build/utils.js</code>中搜索less就会发现<code>less: generateLoaders(&#39;less&#39;)</code>，再结合generateLoaders函数来看，其实vue-cli本身已经做好了配置。</p>
+<p>所以，在删除了webpack中我自己写的配置过后，我的项目编译通过了。</p>
+<p>这个方法我参考了<a href="http://blog.ipsfan.com/4260.html，否则我可能还在挣扎。" target="_blank" rel="noopener">http://blog.ipsfan.com/4260.html，否则我可能还在挣扎。</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/12/11/vue-cli使用less/" data-id="cjpjgbdzn000k8cv3ve0a4g0h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/13/atodo-rebuild-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">atodo-rebuild-3</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/life/">life</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/music/">music</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/12/11/vue-cli使用less/">vue-cli使用less</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/13/atodo-rebuild-3/">atodo-rebuild-3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/13/atodo-rebuild-2/">atodo-rebuild-2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/12/atodo-rebuild-1/">atodo-rebuild-1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Doge Lee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+<script src="http://apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript">
+  if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='/js/jquery-2.0.3.min.js' type='text/javascript'%3E%3C/script%3E"));
+  }
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

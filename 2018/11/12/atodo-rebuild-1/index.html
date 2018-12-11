@@ -7,19 +7,19 @@
   
   <title>atodo-rebuild-1 | World of Wonder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置要在项目中使用less模块，需要安装less和less-loader：12npm install less --save-devnpm install le">
+  <meta name="description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置使用vue-cli webpack模板，不需要再到webpack配置文件再配置less loader，只需要安装less依赖包即可。（这个地方我踩了很久的坑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="atodo-rebuild-1">
 <meta property="og:url" content="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/index.html">
 <meta property="og:site_name" content="World of Wonder">
-<meta property="og:description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置要在项目中使用less模块，需要安装less和less-loader：12npm install less --save-devnpm install le">
+<meta property="og:description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置使用vue-cli webpack模板，不需要再到webpack配置文件再配置less loader，只需要安装less依赖包即可。（这个地方我踩了很久的坑">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-0d46d6734cebfb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6273583-46e9589e7dd84002.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-11-12T07:52:55.208Z">
+<meta property="og:updated_time" content="2018-12-11T07:55:26.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="atodo-rebuild-1">
-<meta name="twitter:description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置要在项目中使用less模块，需要安装less和less-loader：12npm install less --save-devnpm install le">
+<meta name="twitter:description" content="今天主要对前端代码进行重构，初步搭了开发环境、路由和页面结构。 目前项目目录是这样的： 目录中的某些文件等下会提到。 然后以下是今天工作的要点：  安装less模块与webpack的配置； 路由的制定。  安装less模块与webpack的配置使用vue-cli webpack模板，不需要再到webpack配置文件再配置less loader，只需要安装less依赖包即可。（这个地方我踩了很久的坑">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/6273583-0d46d6734cebfb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="World of Wonder" type="application/atom+xml">
@@ -105,8 +105,7 @@
 <li>安装less模块与webpack的配置；</li>
 <li>路由的制定。</li>
 </ol>
-<h3 id="安装less模块与webpack的配置"><a href="#安装less模块与webpack的配置" class="headerlink" title="安装less模块与webpack的配置"></a>安装less模块与webpack的配置</h3><p>要在项目中使用less模块，需要安装less和less-loader：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install less --save-dev</span><br><span class="line">npm install less-loader --save-dev</span><br></pre></td></tr></table></figure></p>
-<p>安装结束后，需要在module中配置：<br>(用vue-cli创建的项目在<code>build/webpack.base.conf.js</code>中配置)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.less$/,</span><br><span class="line">    use: [&#123;</span><br><span class="line">       loader: "style-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "css-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "less-loader"</span><br><span class="line">    &#125;]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装less模块与webpack的配置"><a href="#安装less模块与webpack的配置" class="headerlink" title="安装less模块与webpack的配置"></a>安装less模块与webpack的配置</h3><p><strong>使用vue-cli webpack模板，不需要再到webpack配置文件再配置less loader，只需要安装less依赖包即可。</strong><br>（这个地方我踩了很久的坑，在webpack配置后反而有很多问题…详见<a href="https://www.jianshu.com/p/e58678007d46）" target="_blank" rel="noopener">https://www.jianshu.com/p/e58678007d46）</a></p>
 <p>使用less文件时，当一个less文件a需要依赖less文件b时，我是在文件a中：<br>(我也是这样引入font-awesome的)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import url(&apos;./b.less&apos;);</span><br></pre></td></tr></table></figure></p>
 <p>vue文件需要使用样式时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;../styles/a.less&apos;</span><br></pre></td></tr></table></figure></p>
 <h3 id="路由的制定"><a href="#路由的制定" class="headerlink" title="路由的制定"></a>路由的制定</h3><p>直接上路由配置文件代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'@/pages/Login'</span></span><br><span class="line"><span class="keyword">import</span> Main <span class="keyword">from</span> <span class="string">'@/pages/Main'</span></span><br><span class="line"><span class="keyword">import</span> Todo <span class="keyword">from</span> <span class="string">'@/pages/Todo'</span></span><br><span class="line"><span class="keyword">import</span> Plan <span class="keyword">from</span> <span class="string">'@/pages/Plan'</span></span><br><span class="line"><span class="keyword">import</span> Profile <span class="keyword">from</span> <span class="string">'@/pages/Profile'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/'</span>,</span><br><span class="line">      redirect: <span class="string">'login'</span>,</span><br><span class="line">      component: App,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'login'</span>,</span><br><span class="line">          component: Login</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'main'</span>,</span><br><span class="line">          redirect: <span class="string">'/main/todo'</span>,</span><br><span class="line">          component: Main,</span><br><span class="line">          children: [</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'todo'</span>,</span><br><span class="line">              component: Todo</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'plan'</span>,</span><br><span class="line">              component: Plan</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'profile'</span>,</span><br><span class="line">              component: Profile</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
@@ -117,7 +116,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjofgpvik000b1sv3szvu5lx6" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjpjgbdxh00018cv3dkhsypeu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -169,7 +168,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
     </div>
   </div>
 
@@ -180,6 +179,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/12/11/vue-cli使用less/">vue-cli使用less</a>
+          </li>
         
           <li>
             <a href="/2018/11/13/atodo-rebuild-3/">atodo-rebuild-3</a>
@@ -195,10 +198,6 @@
         
           <li>
             <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/07/star-collector-1/">star-collector-1 开始</a>
           </li>
         
       </ul>

@@ -66,6 +66,55 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vue-cli使用less" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/11/vue-cli使用less/" class="article-date">
+  <time datetime="2018-12-11T07:30:28.000Z" itemprop="datePublished">2018-12-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/study/">study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/11/vue-cli使用less/">vue-cli使用less</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天算是踩了个坑吧…</p>
+<p>我想要在我用vue-cli创建的项目中使用less，于是乎想到要在webpack中进行配置，根据我搜集到的信息，我应该作出如下类似的配置（有的教程则配置得更加高级和复杂一点）：<br><img src="https://upload-images.jianshu.io/upload_images/6273583-4109e7fa3e2a2664.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>但是在我npm run dev的时候，编译却失败了，出现了一些报错，类似于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">error  in ./src/styles/special/index.less</span><br><span class="line"></span><br><span class="line">Module build failed:</span><br><span class="line"></span><br><span class="line">// load the styles</span><br><span class="line">var content = require(&quot;!!../../../node_modules/css-loader/index.js??ref--9-1!../../../node_modules/postcss-loader/lib/index.js??ref--9-2!../../../node_modules/less-loader/dist/cjs.js??ref--9-3!./index.less&quot;);</span><br><span class="line">          ^</span><br><span class="line">Unrecognised input</span><br><span class="line">      in C:\Users\xx\Desktop\atodo\src\styles\special\index.less (line 4, column 12)</span><br><span class="line"></span><br><span class="line"> @ ./src/styles/special/index.less 2:14-343 21:1-42:3 22:19-348</span><br><span class="line"> @ ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib/selector.js?type=script&amp;index=0!./src/pages/Main.vue @ ./src/pages/Main.vue</span><br><span class="line"> @ ./src/router/index.js</span><br><span class="line"> @ ./src/main.js</span><br><span class="line"> @ multi (webpack)-dev-server/client?http://localhost:8080 webpack/hot/dev-server ./src/main.js</span><br></pre></td></tr></table></figure></p>
+<p>我怀疑问题出在webpack配置上，于是搜索我的问题，最后发现其实：</p>
+<p><strong>不用配置…</strong></p>
+<p>对，就是不用配置，准确说是<strong>使用vue-cli创建并且选择使用webpack的项目使用less不需要再对webpack进行配置</strong>。</p>
+<p>在<code>/build/utils.js</code>中搜索less就会发现<code>less: generateLoaders(&#39;less&#39;)</code>，再结合generateLoaders函数来看，其实vue-cli本身已经做好了配置。</p>
+<p>所以，在删除了webpack中我自己写的配置过后，我的项目编译通过了。</p>
+<p>这个方法我参考了<a href="http://blog.ipsfan.com/4260.html，否则我可能还在挣扎。" target="_blank" rel="noopener">http://blog.ipsfan.com/4260.html，否则我可能还在挣扎。</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://dogelee.github.io/2018/12/11/vue-cli使用less/" data-id="cjpjgbdzn000k8cv3ve0a4g0h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-atodo-rebuild-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/13/atodo-rebuild-3/" class="article-date">
@@ -112,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-3/" data-id="cjofgpvhx00011sv3tzcdp941" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-3/" data-id="cjpjgbdxx00038cv3anogubf1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +224,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/" data-id="cjofgpvfy00001sv35vx060i3" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/13/atodo-rebuild-2/" data-id="cjpjgbdxh00008cv3412hdjna" class="article-share-link">Share</a>
       
       
     </footer>
@@ -219,8 +268,7 @@
 <li>安装less模块与webpack的配置；</li>
 <li>路由的制定。</li>
 </ol>
-<h3 id="安装less模块与webpack的配置"><a href="#安装less模块与webpack的配置" class="headerlink" title="安装less模块与webpack的配置"></a>安装less模块与webpack的配置</h3><p>要在项目中使用less模块，需要安装less和less-loader：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install less --save-dev</span><br><span class="line">npm install less-loader --save-dev</span><br></pre></td></tr></table></figure></p>
-<p>安装结束后，需要在module中配置：<br>(用vue-cli创建的项目在<code>build/webpack.base.conf.js</code>中配置)<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.less$/,</span><br><span class="line">    use: [&#123;</span><br><span class="line">       loader: "style-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "css-loader" </span><br><span class="line">    &#125;, &#123;</span><br><span class="line">       loader: "less-loader"</span><br><span class="line">    &#125;]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装less模块与webpack的配置"><a href="#安装less模块与webpack的配置" class="headerlink" title="安装less模块与webpack的配置"></a>安装less模块与webpack的配置</h3><p><strong>使用vue-cli webpack模板，不需要再到webpack配置文件再配置less loader，只需要安装less依赖包即可。</strong><br>（这个地方我踩了很久的坑，在webpack配置后反而有很多问题…详见<a href="https://www.jianshu.com/p/e58678007d46）" target="_blank" rel="noopener">https://www.jianshu.com/p/e58678007d46）</a></p>
 <p>使用less文件时，当一个less文件a需要依赖less文件b时，我是在文件a中：<br>(我也是这样引入font-awesome的)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@import url(&apos;./b.less&apos;);</span><br></pre></td></tr></table></figure></p>
 <p>vue文件需要使用样式时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &apos;../styles/a.less&apos;</span><br></pre></td></tr></table></figure></p>
 <h3 id="路由的制定"><a href="#路由的制定" class="headerlink" title="路由的制定"></a>路由的制定</h3><p>直接上路由配置文件代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> Router <span class="keyword">from</span> <span class="string">'vue-router'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'@/App'</span></span><br><span class="line"><span class="keyword">import</span> Login <span class="keyword">from</span> <span class="string">'@/pages/Login'</span></span><br><span class="line"><span class="keyword">import</span> Main <span class="keyword">from</span> <span class="string">'@/pages/Main'</span></span><br><span class="line"><span class="keyword">import</span> Todo <span class="keyword">from</span> <span class="string">'@/pages/Todo'</span></span><br><span class="line"><span class="keyword">import</span> Plan <span class="keyword">from</span> <span class="string">'@/pages/Plan'</span></span><br><span class="line"><span class="keyword">import</span> Profile <span class="keyword">from</span> <span class="string">'@/pages/Profile'</span></span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Router(&#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: <span class="string">'/'</span>,</span><br><span class="line">      redirect: <span class="string">'login'</span>,</span><br><span class="line">      component: App,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'login'</span>,</span><br><span class="line">          component: Login</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: <span class="string">'main'</span>,</span><br><span class="line">          redirect: <span class="string">'/main/todo'</span>,</span><br><span class="line">          component: Main,</span><br><span class="line">          children: [</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'todo'</span>,</span><br><span class="line">              component: Todo</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'plan'</span>,</span><br><span class="line">              component: Plan</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: <span class="string">'profile'</span>,</span><br><span class="line">              component: Profile</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
@@ -231,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjofgpvik000b1sv3szvu5lx6" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-1/" data-id="cjpjgbdxh00018cv3dkhsypeu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -293,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjofgpvig00081sv36igl6wzr" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/11/12/atodo-rebuild-0/" data-id="cjpjgbe0j000v8cv39vqpdpm8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,7 +398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjofgpvin000c1sv3ym41ncjb" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/star-collector-1/" data-id="cjpjgbe0j000s8cv39foinntt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -410,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjofgpvie00071sv36zmmot3g" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/07/JS中this关键字/" data-id="cjpjgbdxx00058cv3v4lfpmdz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -454,7 +502,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjofgpvkl000z1sv3xe0gfm3r" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/06/summerTail/" data-id="cjpjgbe2200128cv3zo0u4j3h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -551,7 +599,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjofgpvk9000w1sv3vnh5h3uw" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/05/vue的一点原理/" data-id="cjpjgbe03000m8cv38tv4w00t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -592,75 +640,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjofgpvjl000h1sv3d7sdp4ac" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-reg-exp" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/02/reg-exp/" class="article-date">
-  <time datetime="2018-09-02T06:19:44.000Z" itemprop="datePublished">2018-09-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/study/">study</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/02/reg-exp/">reg-exp</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>~ 学习正则表达式拖了好久 今天终于看了一下</p>
-<p>先了解一下基本语法和用法 希望在日后的工作中可以精进</p>
-<h1 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h1><p>正则表达式(regular expression)描述了一种字符串匹配的模式（pattern），可以用来检查一个串是否含有某种子串、将匹配的子串替换或者从某个串中取出符合某个条件的子串等。</p>
-<h3 id="普通字符"><a href="#普通字符" class="headerlink" title="普通字符"></a>普通字符</h3><p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。</p>
-<h3 id="非打印字符"><a href="#非打印字符" class="headerlink" title="非打印字符"></a>非打印字符</h3><p><img src="https://upload-images.jianshu.io/upload_images/6273583-abbe658d4386cb39.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="非打印字符"></p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><p>如果要查找特殊字符，在字符前加<code>\</code>转义。<br><img src="https://upload-images.jianshu.io/upload_images/6273583-a5ba39cc3897465c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="特殊字符"></p>
-<h3 id="限定符"><a href="#限定符" class="headerlink" title="限定符"></a>限定符</h3><p><img src="https://upload-images.jianshu.io/upload_images/6273583-4bb4bc8640293e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="限定符"></p>
-<h3 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h3><p><img src="https://upload-images.jianshu.io/upload_images/6273583-d8eb48ed62449d9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="定位符"></p>
-<h3 id="运算符优先级"><a href="#运算符优先级" class="headerlink" title="运算符优先级"></a>运算符优先级</h3><p><img src="https://upload-images.jianshu.io/upload_images/6273583-febedb26055dfd13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运算符优先级"></p>
-<h3 id="字符簇"><a href="#字符簇" class="headerlink" title="字符簇"></a>字符簇</h3><p><img src="https://upload-images.jianshu.io/upload_images/6273583-d164911a84d140d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="字符簇"><br>当在一组方括号里使用^是，它表示”非”或”排除”的意思，常常用来剔除某个字符。如<code>[^0-9]</code></p>
-<h3 id="一些常用的元字符"><a href="#一些常用的元字符" class="headerlink" title="一些常用的元字符"></a>一些常用的元字符</h3><ul>
-<li>\d    匹配一个数字字符。等价于 [0-9]。</li>
-<li>\D    匹配一个非数字字符。等价于 [^0-9]。</li>
-<li>\s    匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [ \f\n\r\t\v]。</li>
-<li>\S    匹配任何非空白字符。等价于 [^ \f\n\r\t\v]。</li>
-<li>\w    匹配字母、数字、下划线。等价于[A-Za-z0-9_]。</li>
-<li>\W    匹配非字母、数字、下划线。等价于 [^A-Za-z0-9_]。</li>
-</ul>
-<h3 id="重复出现"><a href="#重复出现" class="headerlink" title="重复出现"></a>重复出现</h3><p><code>^[a-zA-Z0-9_]{1,}$      // 所有包含一个以上的字母、数字或下划线的字符串</code></p>
-<h1 id="JS-RegExp对象"><a href="#JS-RegExp对象" class="headerlink" title="JS RegExp对象"></a>JS RegExp对象</h1><h3 id="声明一个RegExp对象"><a href="#声明一个RegExp对象" class="headerlink" title="声明一个RegExp对象"></a>声明一个RegExp对象</h3><p>var patt=new RegExp(pattern,modifiers);<br>var patt=/pattern/modifiers;</p>
-<p>modifiers（修饰符）有<code>i</code>和<code>g</code>：</p>
-<ul>
-<li>i - 修饰符是用来执行不区分大小写的匹配。</li>
-<li>g - 修饰符是用于执行全文的搜索（而不是在找到第一个就停止查找,而是找到所有的匹配）。</li>
-</ul>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><h5 id="test"><a href="#test" class="headerlink" title="test()"></a>test()</h5><p><code>patt.test(str) //返回true或false</code></p>
-<h5 id="exec"><a href="#exec" class="headerlink" title="exec()"></a>exec()</h5><p><code>patt.exeec(str) //返回匹配的字符串片段</code></p>
-<h1 id="菜鸟教程原地址"><a href="#菜鸟教程原地址" class="headerlink" title="菜鸟教程原地址"></a>菜鸟教程原地址</h1><p><a href="http://www.runoob.com/regexp/regexp-tutorial.html" target="_blank" rel="noopener">http://www.runoob.com/regexp/regexp-tutorial.html</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://dogelee.github.io/2018/09/02/reg-exp/" data-id="cjofgpvjp000k1sv3ysb188i9" class="article-share-link">Share</a>
+      <a data-url="https://dogelee.github.io/2018/09/04/嘻嘻/" data-id="cjpjgbe03000o8cv3qi4ir3fu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -700,7 +680,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li></ul>
     </div>
   </div>
 
@@ -711,6 +691,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/12/11/vue-cli使用less/">vue-cli使用less</a>
+          </li>
         
           <li>
             <a href="/2018/11/13/atodo-rebuild-3/">atodo-rebuild-3</a>
@@ -726,10 +710,6 @@
         
           <li>
             <a href="/2018/11/12/atodo-rebuild-0/">atodo-rebuild-0</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/07/star-collector-1/">star-collector-1 开始</a>
           </li>
         
       </ul>
